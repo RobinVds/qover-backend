@@ -34,9 +34,22 @@ $ npm install
 
 ## Running the app
 
+- Start MongoDB (fill in your mounted volume location!)
 ```bash
-$ docker run -d -p 27017:27017 --name mongodb mongo:latest
+$ docker run -d -p 27017:27017 -v ~/mongo/data:/data/db --name mongodb mongo:latest 
 ```
+
+- Create the user (if not yet present)
+
+
+```bash
+curl -XPOST -H "Content-type: application/json" -d '{
+	"username": "Qover",
+	"password": "Ninja"
+}' 'http://localhost:8080/users'
+```
+
+- Start the server
 ```bash
 # development
 $ npm run start
