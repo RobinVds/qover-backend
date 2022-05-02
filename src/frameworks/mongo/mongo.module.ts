@@ -3,13 +3,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongoDataServices } from './mongo.service';
 import { User, UserSchema } from '../../schemas/user.schema';
 import { IDataServices } from '../../abstract/data-services.interface';
+import { config } from 'dotenv';
+
+if (!process.env.NODE_ENV) config(); // Config service could not have been instantiated yet so we need to make sure the environment is configured.
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
-    ]),
-    MongooseModule.forRoot('mongodb://localhost/qover'), // Move to env variables.
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forRoot(process.env.MONGO_DB),
   ],
   providers: [
     {
@@ -17,6 +18,6 @@ import { IDataServices } from '../../abstract/data-services.interface';
       useClass: MongoDataServices,
     },
   ],
-  exports: [IDataServices]
+  exports: [IDataServices],
 })
 export class MongoDataServicesModule {}

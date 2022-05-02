@@ -1,8 +1,8 @@
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigModule } from '@nestjs/config'
-import {config} from "dotenv"
+import { ConfigModule } from '@nestjs/config';
+import { config } from 'dotenv';
 
 import { UsersModule } from '../../users/users.module';
 
@@ -16,7 +16,7 @@ describe('AuthController', () => {
   let controller: AuthController;
 
   beforeEach(async () => {
-    if(!process.env.JWT_SECRET) config() // Config service could not have been instantiated yet so we need to make sure the environment is configured.
+    if (!process.env.JWT_SECRET) config(); // Config service could not have been instantiated yet so we need to make sure the environment is configured.
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -25,7 +25,7 @@ describe('AuthController', () => {
         ConfigModule.forRoot(),
         JwtModule.register({
           secret: process.env.JWT_SECRET,
-          signOptions: { expiresIn: '60s' }, // After 60 seconds a fresh token will be needed. We should put this in configuration and rethink the way refreshment tokens are handled.
+          signOptions: { expiresIn: '7d' }, // After 7 days fresh token will be needed, this should be handled by refresh tokens in a production environment
         }),
       ],
       providers: [AuthService, LocalStrategy, JwtStrategy],
@@ -38,5 +38,4 @@ describe('AuthController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
-
 });

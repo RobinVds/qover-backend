@@ -35,6 +35,9 @@ $ npm install
 ## Running the app
 
 ```bash
+$ docker run -d -p 27017:27017 --name mongodb mongo:latest
+```
+```bash
 # development
 $ npm run start
 

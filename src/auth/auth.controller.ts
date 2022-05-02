@@ -14,8 +14,9 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('protected')
+  @Get('validate-jwt')
   getProfile(@Request() req) {
     return req.user;
   }
+
 }

@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { RequestEstimateDto } from '../dto/request-estimate.dto';
+import { CarTypes } from '../entities/quote.entity';
 import { QuoteController } from '../quote.controller';
 import { QuoteService } from '../quote.service';
 
